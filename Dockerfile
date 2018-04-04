@@ -5,5 +5,6 @@ RUN CGO_ENABLED=0 GOOS=linux go install -a -ldflags '-extldflags "-static"' go.m
 
 FROM devth/helm
 COPY --from=0 /go/bin/sops /usr/local/bin/sops
-RUN apk --update add bind-tools gnupg py-yaml && rm -rf /var/cache/apk/*
+RUN apk --update add bind-tools gnupg py-yaml py-pip && rm -rf /var/cache/apk/*
+RUN pip install jsonpath-ng
 RUN helm plugin install https://github.com/futuresimple/helm-secrets
